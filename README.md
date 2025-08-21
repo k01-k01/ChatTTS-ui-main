@@ -1,6 +1,6 @@
 # ChatTTS WebUI & API
 
-[English README](README_EN.md) | [打赏项目](https://github.com/jianchang512/ChatTTS-ui/issues/122) | [Discord Discussion Group](https://discord.gg/y9gUweVCCJ)
+
 
 一个基于 ChatTTS 的本地网页界面和 API 服务，支持中英文文本转语音，并提供丰富的音色控制选项。
 
