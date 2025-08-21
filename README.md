@@ -12,9 +12,6 @@
 
 ![image](https://github.com/jianchang512/ChatTTS-ui/assets/3378335/669876cf-5061-4d7d-86c5-3333d0882ee8)
 
-文字数字符号 控制符混杂效果
-
-https://github.com/jianchang512/ChatTTS-ui/assets/3378335/e2a08ea0-32af-4a30-8880-3a91f6cbea55
 
 ## 特性
 
@@ -25,6 +22,52 @@ https://github.com/jianchang512/ChatTTS-ui/assets/3378335/e2a08ea0-32af-4a30-888
 - 🚀 支持 CPU/GPU 加速
 - 🐳 支持 Docker 部署
 - 🌍 多平台支持 (Windows/Linux/macOS)
+
+## 技术栈与实现原理
+
+### 核心技术栈
+
+- [ChatTTS](https://github.com/2noise/ChatTTS) - 主要的文本到语音模型
+- [Flask](https://flask.palletsprojects.com/) - Web 框架
+- [PyTorch](https://pytorch.org/) - 深度学习框架
+- [FFmpeg](https://ffmpeg.org/) - 音频处理工具
+- [ModelScope](https://modelscope.cn/) - 模型下载平台
+- [Vocos](https://github.com/gnu4cn/vocos) - 音频声码器
+- [Transformers](https://huggingface.co/docs/transformers/) - 预训练模型工具库
+
+### 工作原理
+
+ChatTTS-UI 是基于 ChatTTS 的文本转语音系统，其工作流程如下：
+
+1. 用户通过 Web 界面或 API 提供文本输入
+2. 文本预处理模块对输入进行处理，包括：
+   - 文本规范化（数字、符号转换等）
+   - 中英文分词处理
+   - 控制符解析（如 [laugh]、[speed] 等）
+3. ChatTTS 模型处理：
+   - 使用预训练的语言模型对文本进行编码
+   - 通过扩散模型生成声学特征
+   - 利用 Vocos 声码器将声学特征转换为波形
+4. 音频后处理：
+   - 使用 FFmpeg 合并多个音频片段
+   - 生成最终的 WAV 音频文件
+5. 返回结果给用户
+
+### 模型架构
+
+ChatTTS 模型主要包含以下组件：
+
+1. **文本编码器**：基于 Llama 架构的语言模型，用于理解文本语义
+2. **声学模型**：扩散模型，用于生成声学特征
+3. **声码器**：Vocos 模型，用于将声学特征转换为音频波形
+4. **音色编码器**：用于控制语音音色的嵌入向量
+
+### 音色系统
+
+ChatTTS 支持灵活的音色控制：
+- 预设音色：通过数字 ID 选择（如 2222, 7869 等）
+- 自定义音色：通过种子值生成特定音色
+- 音色保存：可将生成的音色保存为 .pt 文件供后续使用
 
 ## 快速开始
 
@@ -231,7 +274,7 @@ python cover-pt.py
 ### 请求方式
 
 **方法**: POST  
-**地址**: `http://127.0.0.1:9966/tts`
+**地址**: `http://127.0.0.1:3000/tts`
 
 ### 请求参数
 
@@ -284,19 +327,6 @@ res = requests.post('http://127.0.0.1:9966/tts', data={
 print(res.json())
 ```
 
-## 在 pyVideoTrans 中使用
 
-升级 pyVideoTrans 到 1.82+ 版本: https://github.com/jianchang512/pyvideotrans
 
-1. 点击菜单-设置-ChatTTS，填写请求地址，默认为 http://127.0.0.1:9966
-2. 测试无问题后，在主界面中选择 `ChatTTS`
 
-![image](https://github.com/jianchang512/ChatTTS-ui/assets/3378335/7118325f-2b9a-46ce-a584-1d5c6dc8e2da)
-
-## 常见问题
-
-请查看 [FAQ](faq.md) 文档获取常见问题解决方案。
-
-## 许可证
-
-本项目基于 MIT 许可证发布，请查看 [LICENSE](LICENSE) 文件了解详情。
